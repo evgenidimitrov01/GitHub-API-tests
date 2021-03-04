@@ -1,0 +1,1126 @@
+{
+	"info": {
+		"_postman_id": "0ee55a91-1b76-44cf-a1fc-32d3c45c01c5",
+		"name": "SoftUni Excercises Homework (GitHub Test Repo Issues) Evgeni Dimitrov",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET - Retrieve All Issues from Repo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is arrays of issues\", function() {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type'))\r",
+							"    .to.eql('application/json; charset=utf-8');\r",
+							"  const json = pm.response.json();\r",
+							"  pm.expect(Array.isArray(json)).equals(true);\r",
+							"  for (let item of json) {\r",
+							"    pm.expect(typeof(item)).equals(\"object\");\r",
+							"    pm.expect(Number.isInteger(item.id)).equals(true);\r",
+							"    pm.expect(typeof(item.title)).equals(\"string\");\r",
+							"    pm.expect(typeof(item.state)).equals(\"string\");\r",
+							"  }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues"
+					]
+				},
+				"description": "Retrieve all issues from repo “test_repo” in user “evgenidimitrov01”. \nUse the following HTTP GET request:\nGET https://api.github.com/repos/evgenidimitrov01/test_repo/issues\nBody is empty.\nThe returned HTTP status code is “200 OK” and the HTTP response body holds the issues as JSON array of objects.\nThere is a test in Test section for checking is the response 200 OK.\nThere is another test to check response type of id, title and state."
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Retrieve Issue by Number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check type of id and number is integers\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(Number.isInteger(json.id)).equals(true);\r",
+							"    pm.expect(Number.isInteger(json.number)).equals(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/3",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"3"
+					]
+				},
+				"description": "Retrieve issue #3 from repo “test_repo” in user “evgenidimitrov01”:\nGET https://api.github.com/repos/evgenidimitrov01/test_repo/issues/3\nBody is empty.\nThe returned HTTP status code is “200 OK” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 200 OK.\nThere is another test in Test section for checking response body \"id\" and \"number\" are integers."
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Retrieve Issue by Invalid Number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 404 Not Found\", function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is Not Found\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.message).to.eql(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/631631265",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"631631265"
+					]
+				},
+				"description": "Retrieve invalid issue #631631265 from repo “test_repo” in user “evgenidimitrov01”:\nGET https://api.github.com/repos/evgenidimitrov01/test_repo/issues/631631265\nBody is empty.\nThe returned HTTP status code is “404 Not Found” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 404 Not Found.\nThere is another test in Test section for checking is the error message is \"Not Found\"\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Retrieve All Labels for Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/3/labels",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"3",
+						"labels"
+					]
+				},
+				"description": "Retrieve all labels for existing issue #3 from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/3/labels\nBody is empty.\nThere is a test in Test section for checking is the response 200 OK."
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Retrieve All Comments for Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/2/comments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"2",
+						"comments"
+					]
+				},
+				"description": "Retrieve all comments for existing issue #2 from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/2/comments\nBody is empty.\nThere is a test in Test section for checking is the response 200 OK.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Retrieve Comment by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/790803972",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"comments",
+						"790803972"
+					]
+				},
+				"description": "Retrieve a comment by id. The comment id is global for the entire GitHub (in this example #790803972), but still, the user and repo for the comment are required in the request URL:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/790803972\nBody is emprty.\nThere is a test in Test section for checking is the response 200 OK."
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Creating a New Issue",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 201 Created\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check type of id and number is integers\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(Number.isInteger(json.id)).equals(true);\r",
+							"    pm.expect(Number.isInteger(json.number)).equals(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Take issue number\", function(){\r",
+							"    let response = pm.response.json(), IssueNumber = JSON.stringify(response.number);\r",
+							"    pm.environment.set(\"IssueNumber\", IssueNumber);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Title for new Issue\",\r\n    \"body\": \"Body for new Issue\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues"
+					]
+				},
+				"description": "Creating a new issue to repo “test_repo” in user “evgenidimitrov01”:\nPOST https://api.github.com/repos/evgenidimitrov01/test_repo/issues\nBody is:\n{\n    \"title\": \"Title for new Issue\",\n    \"body\": \"Body for new Issue\"\n}\nThe returned HTTP status code is “201 Created” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 201 Created.\nThere is another test in Test section for checking response body \"id\" and \"number\" are integers.\nThere is a script in tests for set created issue number to variable IssueNumber. \nIssueNumber is a variable declared in the enviroment."
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Creating a New Issue without title",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 422 Unprocessable Entity\", function(){\r",
+							"    pm.response.to.have.status(422);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"body\": \"Body for new Issue\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues"
+					]
+				},
+				"description": "Creating a new issue without \"title\" to repo “test_repo” in user “evgenidimitrov01”:\nPOST https://api.github.com/repos/evgenidimitrov01/test_repo/issues\nBody is:\n{\n    \"body\": \"Body for new Issue\"\n}\nThe returned HTTP status code is “422 Unprocessable Entity” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 422 Unprocessable Entity."
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Creating a New Issue with empty body",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 422 Unprocessable Entity\", function(){\r",
+							"    pm.response.to.have.status(422);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues"
+					]
+				},
+				"description": "Creating a new issue without Body to repo “test_repo” in user “evgenidimitrov01”:\nPOST https://api.github.com/repos/evgenidimitrov01/test_repo/issues\nBody is empty.\nThe returned HTTP status code is “422 Unprocessable Entity” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 422 Unprocessable Entity."
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Creating a New Issue with wrong authorization header",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 401 Unauthorizer\", function(){\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is Bad credentials\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.message).to.eql(\"Bad credentials\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "InvalidUserName",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ab357ca3565affffff4454235639ceeab237b772",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Title for new Issue\",\r\n    \"body\": \"Body for new Issue\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues"
+					]
+				},
+				"description": "Creating a new issue with wrong authorization username and password, to repo “test_repo” in user “evgenidimitrov01”:\nPOST https://api.github.com/repos/evgenidimitrov01/test_repo/issues\nBody is:\n{\n    \"title\": \"Title for new Issue\",\n    \"body\": \"Body for new Issue\"\n}\nThe returned HTTP status code is “401 Unauthorized” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 401 Unauthorized.\nThere is another test in Test section for checking is the error message is \"Bad credentials\""
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Create a Comment for Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 201 OK\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Take comment ID\", function(){\r",
+							"    let response = pm.response.json(), CommentId = JSON.stringify(response.id);\r",
+							"    pm.environment.set(\"CommentID\", CommentId);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"body\": \"This is a comment from Evgeni for Issue with number: {{IssueNumber}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}/comments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"{{IssueNumber}}",
+						"comments"
+					]
+				},
+				"description": "Create a new comment for last stored existing issue number from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}/comments.\nIssueNumber is a variable declared in the enviroment.\n{\n    \"body\": \"This is a comment from Evgeni for Issue with number: {{IssueNumber}}\"\n}\nThere is a test in Test section for checking is the response 201 Created.\n\nThere is a script in Tests for set created comment id to variable CommentID. "
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Edit existing Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check type of id and number is integers\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(Number.isInteger(json.id)).equals(true);\r",
+							"    pm.expect(Number.isInteger(json.number)).equals(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"{{IssueNumber}}"
+					]
+				},
+				"description": "Edit last stored existing issue number from the repo “test_repo” of user “evgenidimitrov01”:\n\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}\n\n{\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\n}\nIssueNumber is a variable declared in the enviroment.\n\nThe returned HTTP status code is “200 OK” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 200 OK.\nThere is another test in Test section for checking response body \"id\" and \"number\" are integers."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Edit existing Issue without authorization header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 401 Unauthorized\", function(){\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"{{IssueNumber}}"
+					]
+				},
+				"description": "Edit last stored existing issue number without authorization header, from the repo “test_repo” of user “evgenidimitrov01”:\n\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}\n\n{\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\n}\nIssueNumber is a variable declared in the enviroment.\n\nThe returned HTTP status code is “401 Unauthorized” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 401 Unauthorized."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Edit non-existing Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 404 Not Found\", function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/-8",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"-8"
+					]
+				},
+				"description": "Edit non-existing issue number #-8 from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}\nBady is:\n{\n    \"title\": \"Title of Issue Number: {{IssueNumber}} is edited!\"\n}\nIssueNumber is a variable declared in the enviroment.\n\nThe returned HTTP status code is “404 Not Found” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 404 Not Found."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Close Existing Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"state\": \"closed\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"{{IssueNumber}}"
+					]
+				},
+				"description": "Close last stored existing issue number from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}\nBody is:\n{\n  \"state\": \"closed\"\n}\nIssueNumber is a variable declared in the enviroment.\nThe returned HTTP status code is “200 OK” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 200 OK.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Open Existing Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"state\": \"open\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"{{IssueNumber}}"
+					]
+				},
+				"description": "Open last stored existing issue number from the repo “test_repo” of user “evgenidimitrov01”:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/{{IssueNumber}}\nBody is:\n{\n  \"state\": \"open\"\n}\nIssueNumber is a variable declared in the enviroment.\nThe returned HTTP status code is “200 OK” and the HTTP response body holds the requested issue as JSON object.\nThere is a test in Test section for checking is the response 200 OK.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Edit Existing Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200 OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"body\": \"Comment with ID: {{CommentID}} has been edited by Evgeni\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/{{CommentID}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"comments",
+						"{{CommentID}}"
+					]
+				},
+				"description": "Edit last stored existing comment by id. The comment id is global for the entire GitHub, but still, the user and repo for the comment are required in the request URL:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/{{CommentID}}\n{\n  \"body\": \"Comment with ID: {{CommentID}} has been edited by Evgeni\"\n}\nCommentID is a variable declared in the enviroment.\nThere is a test in Test section for checking is the response 200 OK."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Delete Existing Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 204 No Content\", function(){\r",
+							"    pm.response.to.have.status(204);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/{{CommentID}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"comments",
+						"{{CommentID}}"
+					]
+				},
+				"description": "Delete  last stored existing comment by id. The comment id is global for the entire GitHub. Use the request below:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/{{CommentID}}\nBody is empty.\nCommentID is a variable declared in the enviroment.\nThere is a test in Test section for checking is the response 204 No Content."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Delete Unexisting Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 404 Not Found\", function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is Not Found\", function(){\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.message).to.eql(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AuthUserName}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AuthUserToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/-5",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"evgenidimitrov01",
+						"test_repo",
+						"issues",
+						"comments",
+						"-5"
+					]
+				},
+				"description": "Delete  non-existing comment by id. The comment id is global for the entire GitHub (In this example #-5). Use the request below:\nhttps://api.github.com/repos/evgenidimitrov01/test_repo/issues/comments/-5\nBody is empty.\nCommentID is a variable declared in the enviroment.\nThere is a test in Test section for checking is the response 404 Not Found.\nThere is another test in Test section for checking is the error message is \"Not Found\""
+			},
+			"response": []
+		}
+	]
+}
